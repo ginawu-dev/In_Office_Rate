@@ -3,101 +3,726 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>In Office Rate</title>
+  <title>In Office Rate — Hybrid Work & Office Attendance Tracker</title>
+  <meta name="description" content="Track office, WFH, and off days with In Office Rate. Monitor your in-office percentage, plan hybrid schedules, track holidays, and keep work expenses in one place on iPhone.">
+  <link rel="canonical" href="https://ginawu-dev.github.io/In_Office_Rate/">
+  <meta property="og:title" content="In Office Rate — Hybrid Work & Office Attendance Tracker">
+  <meta property="og:description" content="Track office, WFH, and off days with In Office Rate. Monitor your in-office percentage, plan hybrid schedules, track holidays, and keep work expenses in one place on iPhone.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ginawu-dev.github.io/In_Office_Rate/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "In Office Rate",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "iOS",
+    "description": "In Office Rate helps users track Office, Work From Home, and Off days, monitor monthly working-day totals, calculate in-office percentage, plan hybrid schedules, track holidays, and record expenses.",
+    "applicationUrl": "https://apps.apple.com/ng/app/in-office-rate/id6504166193",
+    "url": "https://ginawu-dev.github.io/In_Office_Rate/"
+  }
+  </script>
   <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-alt: #eef5ff;
+      --text: #152238;
+      --muted: #5e6b82;
+      --line: #dbe5f0;
+      --brand: #0f6af3;
+      --brand-dark: #0a4fc7;
+      --accent: #eaf4ff;
+      --success: #1a7f5a;
+      --shadow: 0 18px 46px rgba(16, 41, 79, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #1f2937;
-      background: #f5f7fa;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
       line-height: 1.6;
     }
 
-    main {
-      max-width: 720px;
-      margin: 48px auto;
-      padding: 32px;
+    a {
+      color: var(--brand-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(248, 251, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(219, 229, 240, 0.8);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 0.96rem;
+    }
+
+    .button,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      line-height: 1.2;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--brand) 0%, #1d7ef5 100%);
+      color: white;
+      box-shadow: 0 12px 28px rgba(15, 106, 243, 0.22);
+    }
+
+    .button:hover,
+    .button-secondary:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
       background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    main {
+      padding: 24px 0 64px;
+    }
+
+    section {
+      padding: 48px 0;
+    }
+
+    .hero {
+      padding-top: 56px;
+      padding-bottom: 48px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent);
+      border: 1px solid #d7eaff;
+      color: var(--brand-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     h1 {
-      color: #0f766e;
-      margin-top: 0;
+      margin: 18px 0 16px;
+      font-size: clamp(2.5rem, 5vw, 4.3rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+      color: var(--text);
+    }
+
+    .hero-copy {
+      font-size: 1.18rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .meta-pills span {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+    }
+
+    .hero-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .mini-stat {
+      background: linear-gradient(180deg, #f9fbff 0%, #eef5ff 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1.7rem;
+      letter-spacing: -0.05em;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .mini-stat span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .section-header {
+      max-width: 700px;
+      margin-bottom: 28px;
     }
 
     h2 {
-      margin-top: 32px;
-      color: #111827;
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      letter-spacing: -0.05em;
+      line-height: 1.1;
+      color: var(--text);
     }
 
-    a {
-      color: #0f766e;
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
     }
 
-    .contact {
-      padding: 16px;
-      background: #ecfdf5;
-      border-radius: 10px;
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      box-shadow: 0 10px 24px rgba(16, 41, 79, 0.04);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+
+    .card p,
+    .card li,
+    .faq-item p,
+    .support-card p,
+    .point-list li,
+    .info-list li {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .card ul,
+    .point-list,
+    .info-list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 30px;
+      color: var(--muted);
+    }
+
+    .checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .info-panel {
+      background: linear-gradient(180deg, #f9fbff 0%, #eef5ff 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .info-panel strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .faq-item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 18px;
+    }
+
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+
+    .support-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 10px 24px rgba(16, 41, 79, 0.04);
+    }
+
+    .support-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 18px;
     }
 
     footer {
-      margin-top: 36px;
-      font-size: .9rem;
-      color: #6b7280;
+      border-top: 1px solid var(--line);
+      padding: 30px 0 50px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .split,
+      .feature-grid,
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      h1 {
+        letter-spacing: -0.04em;
+      }
+
+      .hero {
+        padding-top: 32px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+      }
+
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .support-links {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>In Office Rate</h1>
-
-    <p>
-      In Office Rate helps you track office days, work-from-home days,
-      daily expenses, and work-related summaries.
-    </p>
-
-    <h2>Contact Support</h2>
-
-    <div class="contact">
-      <p>
-        If you need help, have found a problem, or would like to suggest a
-        feature, email us at:
-      </p>
-
-      <p>
-        <a href="mailto:ginawuwriter@outlook.com">ginawuwriter@outlook.com</a>
-      </p>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top">In Office Rate</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#tracking">Tracking</a>
+        <a href="#detection">Automatic Detection</a>
+        <a href="#holiday-planning">Holiday Planning</a>
+        <a href="#expenses">Expenses</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+      </nav>
     </div>
+  </header>
 
-    <h2>Frequently Asked Questions</h2>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Hybrid work tracker</span>
+          <h1>In Office Rate</h1>
+          <p class="hero-copy">
+            Track Office, Work From Home, and Off days, monitor your in-office percentage,
+            plan holidays, and keep work expenses in one place.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="https://apps.apple.com/ng/app/in-office-rate/id6504166193" target="_blank" rel="noopener noreferrer" aria-label="Download In Office Rate on the App Store">Download on the App Store</a>
+            <a class="button-secondary" href="#tracking">Learn how it works</a>
+          </div>
+          <div class="meta-pills" aria-label="Key capabilities">
+            <span>Office tracking</span>
+            <span>WFH tracking</span>
+            <span>Holiday planning</span>
+            <span>Expense tracking</span>
+          </div>
+        </div>
 
-    <h3>How is my data stored?</h3>
-    <p>
-      Your calendar and expense records are stored locally on your device.
-    </p>
+        <div class="hero-card" aria-label="Summary of product capabilities">
+          <strong>Hybrid work, office attendance & expense tracking</strong>
+          <div class="mini-grid">
+            <div class="mini-stat">
+              <strong>Office</strong>
+              <span>Record in-office days</span>
+            </div>
+            <div class="mini-stat">
+              <strong>WFH</strong>
+              <span>Track remote days</span>
+            </div>
+            <div class="mini-stat">
+              <strong>Off</strong>
+              <span>Log time away</span>
+            </div>
+            <div class="mini-stat">
+              <strong>%</strong>
+              <span>See in-office percentage</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h3>How can I export my records?</h3>
-    <p>
-      Open the Expenses or Summary tab, select Export, choose a date range,
-      and use the CSV export option.
-    </p>
+    <section id="tracking">
+      <div class="container">
+        <div class="section-header">
+          <h2>Hybrid work tracking that fits your pattern</h2>
+          <p class="lead">
+            In Office Rate helps you record Office, Work From Home, and Off days while tracking your
+            monthly working-day totals and in-office percentage.
+          </p>
+        </div>
 
-    <h3>How do I record an office day?</h3>
-    <p>
-      Open the In-Office Rate tab, select a date, and choose Office,
-      Work From Home, or Off.
-    </p>
+        <div class="feature-grid">
+          <article class="card" aria-labelledby="office-status">
+            <h3 id="office-status">Office, WFH & Off</h3>
+            <p>Log each day as Office, Work From Home, or Off so your work pattern stays clear over time.</p>
+          </article>
 
-    <h3>How quickly will I receive a response?</h3>
-    <p>
-      We aim to respond to support requests within a few business days.
-    </p>
+          <article class="card" aria-labelledby="monthly-tracking">
+            <h3 id="monthly-tracking">Monthly totals</h3>
+            <p>Review monthly working-day totals to understand how often your schedule includes office time.</p>
+          </article>
 
-    <footer>
-      © 2026 In Office Rate
-    </footer>
+          <article class="card" aria-labelledby="target-rate">
+            <h3 id="target-rate">In-office percentage & target</h3>
+            <p>Calculate your in-office percentage and set a target in-office rate to plan your hybrid routine.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="detection">
+      <div class="container split">
+        <div>
+          <div class="section-header">
+            <h2>Optional automatic office and WFH detection</h2>
+          </div>
+          <ul class="checklist">
+            <li>Save Office and Home locations to help with automatic work-status detection.</li>
+            <li>Office detection requires at least one hour at a saved Office location.</li>
+            <li>Manual entries take priority when a status is recorded directly.</li>
+          </ul>
+        </div>
+
+        <aside class="info-panel" aria-label="Automatic detection details">
+          <strong>Location-based detection</strong>
+          <p>
+            Automatic detection is optional and can help support your work-status tracking. It does not replace
+            direct manual entry when you prefer to set status yourself.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="holiday-planning">
+      <div class="container split">
+        <div class="info-panel">
+          <strong>Holiday planning</strong>
+          <p>
+            Plan date ranges for holidays, and those days are automatically marked as Off. You can still change individual dates when needed.
+          </p>
+        </div>
+
+        <div>
+          <div class="section-header">
+            <h2>Plan time off without losing visibility</h2>
+          </div>
+          <ul class="checklist">
+            <li>Set holiday date ranges.</li>
+            <li>See holiday countdowns live.</li>
+            <li>Adjust individual dates if your plans change.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="expenses">
+      <div class="container">
+        <div class="section-header">
+          <h2>Track work expenses with your status records</h2>
+          <p class="lead">
+            In Office Rate keeps work-status tracking and expense tracking together so you can review both in context.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="card" aria-labelledby="expense-date-category">
+            <h3 id="expense-date-category">By date &amp; category</h3>
+            <p>Record expenses by date and category to keep spending organized.</p>
+          </article>
+
+          <article class="card" aria-labelledby="expense-summary">
+            <h3 id="expense-summary">Weekly, monthly &amp; yearly views</h3>
+            <p>Review expenses in weekly, monthly, and yearly summaries to spot trends over time.</p>
+          </article>
+
+          <article class="card" aria-labelledby="csv-export">
+            <h3 id="csv-export">Category percentages &amp; CSV export</h3>
+            <p>See category percentages and export your work-status and expense data as CSV.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sync">
+      <div class="container split">
+        <div>
+          <div class="section-header">
+            <h2>Private sync &amp; data</h2>
+          </div>
+          <ul class="checklist">
+            <li>Use optional private iCloud syncing across devices.</li>
+            <li>The App Store privacy disclosure currently states Data Not Collected.</li>
+          </ul>
+        </div>
+
+        <aside class="info-panel" aria-label="Data privacy disclosure">
+          <strong>Verified privacy disclosure</strong>
+          <p>
+            The App Store listing states that the developer does not collect data. This page does not expand beyond that disclosure.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <h2>Who it’s for</h2>
+          <p class="lead">
+            In Office Rate is useful for hybrid workers, people tracking workplace attendance requirements,
+            and anyone who wants to monitor office/WFH patterns alongside work expenses.
+          </p>
+        </div>
+
+        <ul class="point-list">
+          <li>Hybrid workers planning office and home days.</li>
+          <li>People tracking workplace attendance requirements.</li>
+          <li>Users who want to see office/WFH patterns over time.</li>
+          <li>People who want work-status and expense records together.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently asked questions</h2>
+        </div>
+
+        <div class="faq-grid">
+          <article class="faq-item">
+            <h3>How can I track how many days I work in the office?</h3>
+            <p>Record each day as Office, Work From Home, or Off and review your monthly working-day totals.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Is there an app to calculate my in-office percentage?</h3>
+            <p>Yes. In Office Rate calculates your in-office percentage and lets you set a target in-office rate.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can I track Office and Work From Home days on iPhone?</h3>
+            <p>Yes. In Office Rate is designed for iPhone and tracks Office, Work From Home, and Off statuses.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can In Office Rate automatically detect when I am in the office?</h3>
+            <p>Yes, optionally. Users can save Office and Home locations to assist automatic detection, and Office detection requires at least one hour at a saved Office location.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can I set a target office attendance rate?</h3>
+            <p>Yes. You can set a target in-office rate within the app.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can I track holidays and days off?</h3>
+            <p>Yes. You can plan holiday date ranges, and those dates are automatically marked as Off, with a live countdown.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can I track work expenses?</h3>
+            <p>Yes. In Office Rate supports expense tracking by date and category, with weekly, monthly, and yearly summaries.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can I export my office attendance and expense records?</h3>
+            <p>Yes. CSV export is available for work-status and expense data.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Does In Office Rate sync across devices?</h3>
+            <p>Yes, via optional private iCloud syncing across devices.</p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Does In Office Rate provide tax or employment advice?</h3>
+            <p>No. The app does not provide tax, financial, or employment advice.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="support">
+      <div class="container">
+        <div class="support-card">
+          <h2>Support</h2>
+          <p>
+            If you need help, have found a problem, or would like to suggest a feature, email us at
+            <a href="mailto:ginawuwriter@outlook.com">ginawuwriter@outlook.com</a>.
+          </p>
+          <div class="support-links">
+            <a class="button" href="https://apps.apple.com/ng/app/in-office-rate/id6504166193" target="_blank" rel="noopener noreferrer">Open App Store listing</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 In Office Rate</span>
+      <div>
+        <a href="https://apps.apple.com/ng/app/in-office-rate/id6504166193" target="_blank" rel="noopener noreferrer">App Store</a>
+        <span> · </span>
+        <a href="mailto:ginawuwriter@outlook.com">Support</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
